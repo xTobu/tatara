@@ -1,0 +1,36 @@
+version: "3.3"
+services:
+  api:
+    container_name: tatara-api
+    image: tatara/api:latest
+    build:
+      context: ./services/api/
+      dockerfile: ../../docker/build/api/Dockerfile
+    ports:
+      - "8888:8888"
+    restart: always
+    tty: true
+    privileged: true
+    links:
+      - database
+    depends_on:
+      - database
+    # networks:
+    #   - app_net
+  database:
+    container_name: tatara-database
+    image: tatara/database:latest
+    build: ./docker/build/database
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/build/database/initdb.d:/docker-entrypoint-initdb.d
+      - ./docker/build/database/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./services/database/postgresql/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-tatara}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-0000}
+    restart: always
+    # tty: true
+    # networks:
+    #   - app_net
