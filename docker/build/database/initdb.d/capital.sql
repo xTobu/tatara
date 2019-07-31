@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS public."capital"
 (
-    id serial
+    id bigserial not null
 		constraint capital_pk
 			primary key,
     sstockidx    smallint not null,
