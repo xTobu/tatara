@@ -28,7 +28,8 @@ services:
       - ./docker/build/database/postgresql.conf:/etc/postgresql/postgresql.conf
       - ./services/database/postgresql/data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-tatara}
+      POSTGRES_DB: ${POSTGRES_DB:-tatara}
+      POSTGRES_USER: ${POSTGRES_USER:-su}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-0000}
     restart: always
     # tty: true
